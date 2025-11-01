@@ -1,18 +1,18 @@
 // src/Login.js
-import React, { useState } from "react"
 import axios from "axios"
-import { saveTokens, getUserFromToken } from "../../lib/auth"
 import { useNavigate } from "react-router"
+import React, { useState } from "react"
+import { saveTokens, getUserFromToken } from "../../lib/auth"
 
 
 export default function Login({ setUser }) {
-    
+
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
-            username: "",
-            password: "" 
-        });
-    
+        username: "",
+        password: ""
+    });
+
     //  when user write , this mehtod will be called ,save the input from user into the state variable
     const handleChange = (event) => {
         setFormData({
@@ -20,15 +20,17 @@ export default function Login({ setUser }) {
         })
     }
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event) => 
+    {
         event.preventDefault()
         try {
-            const response = await axios.post("http://127.0.0.1:8000/api/login/", { username, password })
-            saveTokens(response.data.access, response.data.refresh)
+            const responce = await axiox.post('http://127.0.0.1:8000/api/login/', formData)
+            saveTokens(responce.data.access,responce.data.refresh)
             setUser(getUserFromToken())
             // navigate("/Home")
-        } catch (error) {
-             console.error("Login failed:", error.response?.data);
+        } catch (error) 
+        {
+            console.error("Login failed:", error.response?.data);
         }
     }
 
