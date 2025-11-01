@@ -1,0 +1,21 @@
+import React from 'react'
+import clearTokens from '../../lib/auth'
+import { useNavigate } from 'react-router'
+
+function logOutButton({setUser}) {
+
+    const navigate = useNavigate()
+    function handleLogOut (){
+       clearTokens()
+        setUser(null)
+        navigate('/login')
+    }
+
+  return (
+    <div>
+      <button onClick={handleLogOut}>Log out</button>
+    </div>
+  )
+}
+
+export default logOutButton

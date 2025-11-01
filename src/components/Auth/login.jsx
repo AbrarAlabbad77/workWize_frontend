@@ -2,6 +2,7 @@
 import axios from "axios"
 import { useNavigate } from "react-router"
 import React, { useState } from "react"
+import Home from "../Home/Home"
 import { saveTokens, getUserFromToken } from "../../lib/auth"
 
 
@@ -24,10 +25,10 @@ export default function Login({ setUser }) {
     {
         event.preventDefault()
         try {
-            const responce = await axiox.post('http://127.0.0.1:8000/api/login/', formData)
+            const responce = await axios.post('http://127.0.0.1:8000/api/login/', formData)
             saveTokens(responce.data.access,responce.data.refresh)
             setUser(getUserFromToken())
-            // navigate("/Home")
+            navigate("/home")
         } catch (error) 
         {
             console.error("Login failed:", error.response?.data);
