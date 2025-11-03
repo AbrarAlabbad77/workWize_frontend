@@ -9,6 +9,7 @@ import Navbar from './components/Navbar/Navbar'
 import Login from './components/Auth/Login'
 import Home from './components/Home/Home'
 import AboutUs from './components/AboutUs/AboutUs'
+import NewProject from './components/NewProject/NewProject'
 
 
 
@@ -31,6 +32,8 @@ function App() {
 
 
         <Routes>
+          
+          <Route path='newspace/' element={< NewProject/>} />
           <Route path='aboutUs/' element={< AboutUs/>} />
           <Route path='signUp/' element={< Signup1/>} />
           <Route path='home/' element={< Home/>} />

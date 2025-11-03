@@ -50,7 +50,7 @@ export default function Login({ setUser }) {
                         className="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" />
 
                     <button type='submit'
-                        className="w-full bg-[#004aad] text-white font-medium py-2.5 rounded-lg hover:bg-blue-700 transition-colors mt-8" > Sign UP</button>
+                        className="w-full bg-[#004aad] text-white font-medium py-2.5 rounded-lg hover:bg-[#1A4295] transition-colors mt-8" > Sign UP</button>
                 </form>
 
                 <div className="flex items-center justify-center gap-2 mt-4">
