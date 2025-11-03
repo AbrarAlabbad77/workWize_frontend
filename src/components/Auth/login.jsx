@@ -3,7 +3,7 @@ import axios from "axios"
 import { Link } from "react-router"
 import { useNavigate } from "react-router"
 import React, { useState } from "react"
-import Home from "../Home/Home"
+import Home from '../Home/Home'
 import { saveTokens, getUserFromToken } from "../../lib/auth"
 
 
@@ -29,7 +29,7 @@ export default function Login({ setUser }) {
             const responce = await axios.post('http://127.0.0.1:8000/api/login/', formData)
             saveTokens(responce.data.access, responce.data.refresh)
             setUser(getUserFromToken())
-            navigate("/home")
+            navigate("/home-login")
         } catch (error) {
             console.error("Login failed:", error.response?.data);
         }
