@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState  } from 'react'
 import axios from 'axios'
 import { getTokens } from '../../lib/auth'
+import { useNavigate } from "react-router"
 
 
 function Home() {
 
+    // var
     const [project, setProject] = useState([])
+    const [loading, setLoading] = useState(true)
+    const navigate = useNavigate()
 
-    const handleReguest = async () => {
+
+    const handleRequest = async () => {
         try {
             const { access } = getTokens();
             const response = await axios.get('http://127.0.0.1:8000/api/myspacese/', { headers: { Authorization: `Bearer ${access}` } })
@@ -18,13 +23,26 @@ function Home() {
         catch (error) {
             console.error("Loading Spacese failed:", error.response?.data);
         }
+        finally {
+      setLoading(false)}
     }
 
     useEffect(() => {
-        handleReguest()
+        handleRequest()
     }, [])
+
+
+    if (loading) {
     return (
-        <div className="min-h-screen bg-[#f8faff] px-10 py-10 pt-28">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#f8faff]">
+        <img src="../../images/loading.svg" className="h-130 w-auto mx-auto ml-110" />
+        <p className="text-gray-500 text-lg ">Loading your workspaces...</p>
+      </div>
+    )
+  }
+
+    return (
+        <div className="min-h-screen bg-[#f8faff] px-10 py-10 pt-28 ">
 
             {/* title of page */}
             <div className='flex flex-row justify-between'>
@@ -55,15 +73,15 @@ function Home() {
                                 <p className="flex items-center gap-2">
                                     🗓 <span>{pro.deadline || "No deadline"}</span>
                                 </p>
-                                <button className="text-[#004aad] font-semibold hover:text-blue-700 transition-colors">
+                                <button  onClick={() => navigate(`/spaces/${pro.id}`)} className="text-[#004aad] font-semibold hover:text-blue-700 transition-colors">
                                     View Details →
                                 </button>
                             </div>
                         </div>
                     ))}
-                </div>
-            ) :
-                ( // if there is no space yet 
+                </div>) 
+                :// if there is no space yet 
+                ( 
                     <div className="bg-white rounded-xl p-8 text-center shadow-sm border border-gray-100 mt-10">
                         <p className="text-gray-500 text-lg">
                             😅 No workspaces yet — why not create your first one?

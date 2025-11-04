@@ -11,7 +11,7 @@ import AboutUs from './components/AboutUs/AboutUs'
 import NewProject from './components/NewProject/NewProject'
 import LandPage from './components/Home/LandPage'
 import Home from './components/Home/Home'
-import SpaceDetail from '../images/SpaceDetail/SpaceDetail'
+import SpaceDetail from './components/SpaceDetail/SpaceDetail'
 
 
 
@@ -38,9 +38,9 @@ function App() {
           <Route path='signUp/' element={< Signup1 />} />
           <Route path='login/' element={<Login setUser={setUser} />} />
           <Route path='newspace/' element={< NewProject />} />
-          <Route path='home/' element={< LandPage />} />
-          <Route path='home-login/' element={< Home />} />
-          <Route path='space/' element={< SpaceDetail />} />
+          <Route path='landhome/' element={< LandPage />} />
+          <Route path='home/' element={< Home />} />
+          <Route path='spaces/:project_id' element={< SpaceDetail />} />
 
         </Routes>
 
