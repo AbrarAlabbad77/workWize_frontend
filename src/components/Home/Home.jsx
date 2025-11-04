@@ -86,7 +86,7 @@ function Home() {
                         <p className="text-gray-500 text-lg">
                             😅 No workspaces yet — why not create your first one?
                         </p>
-                        <button className="mt-5 bg-[#004aad] text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                        <button newspace onClick={() => navigate(`/newspace/`)} className="mt-5 bg-[#004aad] text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
                             + New Workspace
                         </button>
                     </div>

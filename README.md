@@ -1,16 +1,39 @@
-# React + Vite
+# Work Wize
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+______________________ 
 
-Currently, two official plugins are available:
+## Description
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Workwize is a fully integrated,  project that represents  the skills I've learned in the software engineering Bootcamp. It's a project and task management system designed for businesses and teams to streamline workflows efficiently. The application allows users to create workspaces, manage tasks, assign team members, and monitor progress through an interactive dashboard. The backend was developed using Python, the Django REST framework (DRF), and PostgreSQL, while the frontend was built using React and Tailwind CSS, with JWT authentication for secure access.
 
-## React Compiler
+# Getting Started/Code Installation
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+To clone the project up and running on your local machine, follow these instructions:
+1. Clone the repo:
+`git clone git@github.com:AbrarAlabbad77/workWize_backend.git`
+`git clone git@github.com:AbrarAlabbad77/workWize_frontend.git`
 
-## Expanding the ESLint configuration
+2. Navigate to the backend folder
+cd workWize_backend
+or
+cd workWize_frontend
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+3. Create and activate a virtual environment:
+python -m venv venv
+source venv/bin/activate       # for macOS/Linux
+venv\Scripts\activate          # for Windows
+
+4. Install dependencies manually:
+pip install django 
+
+
+# Technologies Used
+Backend: Python, Django REST framework (DRF), PostgreSQL
+Frontend: React, Tailwind CSS
+Dev Tools: GitHub,
+
+
+## Planning
+#  Entity Relationship Diagram - ERD
+![alt text](<ERD.png>)
+
