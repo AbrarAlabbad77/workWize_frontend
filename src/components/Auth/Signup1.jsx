@@ -65,7 +65,7 @@ function signUp() {
 
                 <div className="flex items-center justify-center gap-2 mt-4">
                     <h5 className="text-gray-700">Or have an account?</h5>
-                    <Link to="/login" className="text-blue-600 hover:underline font-medium" style={{ color: "#004aad" }}>
+                    <Link to="/login/" className="text-blue-600 hover:underline font-medium" style={{ color: "#004aad" }}>
                         Log in
                     </Link>
                 </div>

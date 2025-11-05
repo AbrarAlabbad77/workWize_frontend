@@ -62,7 +62,7 @@ export default function Login({ setUser }) {
 
                 <div className="flex items-center justify-center gap-2 mt-4">
                     <h5 className="text-gray-700">Do not have an account ?</h5>
-                    <Link to="/signUp" className="text-blue-600 hover:underline font-medium"
+                    <Link to="/signUp/" className="text-blue-600 hover:underline font-medium"
                         style={{ color: "#004aad" }}>
                         create an account
                     </Link>

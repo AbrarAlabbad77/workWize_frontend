@@ -12,25 +12,26 @@ import NewProject from './components/NewProject/NewProject'
 import LandPage from './components/Home/LandPage'
 import Home from './components/Home/Home'
 import SpaceDetail from './components/SpaceDetail/SpaceDetail'
+import NewTask from './components/NewTask/NewTask'
 
 
 
 // component from shadcn
-import { Button } from "@/components/ui/button"
+// import { Button } from "@/components/ui/button"
 
 // color light #004aad ,,dark #03306d
 
 function App() {
   //  To keep trck of user login 
   const [user, setUser] = useState(getUserFromToken());
-  <BrowserRouter> const location = useLocation() </BrowserRouter>
-  const hideNavbar = location.pathname === "/login/" || location.pathname === "/signUp/";
+  // <BrowserRouter> const location = useLocation() </BrowserRouter>
+  // const hideNavbar = location.pathname === "/login/" || location.pathname === "/signUp/";
 
   return (
     <div>
       <BrowserRouter>
-        {!hideNavbar && <Navbar user={user} setUser={setUser} />}
-        {/* <Navbar user={user} setUser={setUser}/> */}
+        {/* {!hideNavbar && <Navbar user={user} setUser={setUser} />} */}
+        <Navbar user={user} setUser={setUser}/>
 
 
         <Routes>
@@ -41,7 +42,7 @@ function App() {
           <Route path='landhome/' element={< LandPage />} />
           <Route path='home/' element={< Home />} />
           <Route path='spaces/:project_id' element={< SpaceDetail />} />
-
+          <Route path='spaces/:project_id' element={< NewTask />} />
         </Routes>
 
       </BrowserRouter>
