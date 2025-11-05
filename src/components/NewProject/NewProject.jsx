@@ -52,7 +52,7 @@ function NewProject() {
                             className="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" />
 
                         <label className="block text-sm font-medium text-gray-700 mb-2 mt-4">⏳ Deadline</label>
-                        <input name='deadline' placeholder='' onChange={handleChange}
+                        <input type="date" name='deadline' placeholder='' onChange={handleChange}
                             className="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" />
 
                         <label className="block text-sm font-medium text-gray-700 mb-2 mt-4">👔 Supervisor ID</label>

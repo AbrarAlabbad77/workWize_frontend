@@ -36,7 +36,14 @@ export default function Login({ setUser }) {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+        <div className="min-h-screen flex flex-row items-center justify-center bg-gray-100 px-4">
+
+            {/*  image  */}
+            <div>
+                <img src="../../images/Login-bro.svg" className="h-130 w-auto mx-auto ml-20" />
+            </div>
+
+            {/* form  */}
             <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 space-y-6">
                 <h2 className="text-2xl font-bold text-center text-gray-800">Log in</h2>
                 <form onSubmit={handleSubmit}>
@@ -56,7 +63,7 @@ export default function Login({ setUser }) {
                 <div className="flex items-center justify-center gap-2 mt-4">
                     <h5 className="text-gray-700">Do not have an account ?</h5>
                     <Link to="/signUp" className="text-blue-600 hover:underline font-medium"
-                     style={{ color: "#004aad" }}>
+                        style={{ color: "#004aad" }}>
                         create an account
                     </Link>
                 </div>

@@ -35,7 +35,7 @@ function App() {
 
         <Routes>
           <Route path='aboutUs/' element={< AboutUs />} />
-          <Route path='signUp/' element={< Signup1 />} />
+          <Route path='signup/' element={< Signup1 />} />
           <Route path='login/' element={<Login setUser={setUser} />} />
           <Route path='newspace/' element={< NewProject />} />
           <Route path='landhome/' element={< LandPage />} />

@@ -36,7 +36,7 @@ function signUp() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+        <div className="min-h-screen flex flex-row items-center justify-center bg-gray-100 px-4">
             <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 space-y-6">
                 <h2 className="text-2xl font-bold text-center text-gray-800">Create an Account</h2>
                 <form onSubmit={handleSubmit}>
@@ -69,6 +69,12 @@ function signUp() {
                         Log in
                     </Link>
                 </div>
+            </div>
+
+
+                {/*  image  */}
+            <div>
+                <img src="../../images/Sign up-pana.svg" className="h-130 w-auto mx-auto ml-20" />
             </div>
         </div>
 

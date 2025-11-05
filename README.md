@@ -6,34 +6,55 @@ ______________________
 
 Workwize is a fully integrated,  project that represents  the skills I've learned in the software engineering Bootcamp. It's a project and task management system designed for businesses and teams to streamline workflows efficiently. The application allows users to create workspaces, manage tasks, assign team members, and monitor progress through an interactive dashboard. The backend was developed using Python, the Django REST framework (DRF), and PostgreSQL, while the frontend was built using React and Tailwind CSS, with JWT authentication for secure access.
 
-# Getting Started/Code Installation
+## ✅ Getting Started / Code Installation
 
-To clone the project up and running on your local machine, follow these instructions:
-1. Clone the repo:
-`git clone git@github.com:AbrarAlabbad77/workWize_backend.git`
-`git clone git@github.com:AbrarAlabbad77/workWize_frontend.git`
+To run this project locally, follow these steps:
 
-2. Navigate to the backend folder
+---
+
+### **📌 1. Clone the repositories**
+
+```
+git clone git@github.com:AbrarAlabbad77/workWize_backend.git
+git clone git@github.com:AbrarAlabbad77/workWize_frontend.git
+```
+
+---
+
+### **📌 2. Navigate to the project folder**
+Backend:
+```
 cd workWize_backend
-or
+```
+
+Frontend:
+```
 cd workWize_frontend
+```
 
-3. Create and activate a virtual environment:
+---
+
+### **📌 3. Create & activate a virtual environment (Backend only)**
+
+```
 python -m venv venv
-source venv/bin/activate       # for macOS/Linux
-venv\Scripts\activate          # for Windows
+source venv/bin/activate
+```
 
-4. Install dependencies manually:
-pip install django 
+---
 
+## ✅ Technologies Used
 
-# Technologies Used
-Backend: Python, Django REST framework (DRF), PostgreSQL
-Frontend: React, Tailwind CSS
-Dev Tools: GitHub,
+| Area          | Technologies |
+|---------------|--------------|
+| **Backend**   | Python, Django REST Framework (DRF), PostgreSQL |
+| **Frontend**  | React, Tailwind CSS |
+| **Dev Tools** | Git, GitHub |
 
+---
 
-## Planning
-#  Entity Relationship Diagram - ERD
-![alt text](<ERD.png>)
+## ✅ Planning
+
+### 📌 Entity Relationship Diagram (ERD)
+![ERD Diagram](images/ERD.png)
 

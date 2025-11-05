@@ -4,6 +4,9 @@ import { useParams } from 'react-router'
 import { getTokens } from '../../lib/auth'
 import { ClipboardList, PieChart, CheckCircle2, Clock, PartyPopper } from "lucide-react"
 
+// component 
+import NewTask from '../NewTask/NewTask'
+
 
 function SpaceDetail() {
 
@@ -12,6 +15,7 @@ function SpaceDetail() {
     const [tasks, setTasks] = useState([])
     const [project, setProject] = useState()
     const [loading, setLoading] = useState(true)
+    const [showPopUp , setShowPopUp] = useState(false)
 
 
     const handleReques = async () => {
@@ -55,7 +59,7 @@ function SpaceDetail() {
         return diffDays >= 0 && diffDays <= 7;
     }).length;
 
-
+    // this code appear till the data fetch from the backend 
     if (loading) {
         return (
             <div className="min-h-screen flex flex-col items-center justify-center bg-[#f8faff]">
@@ -116,7 +120,7 @@ function SpaceDetail() {
                 </div>
             </div>
 
-            {/* Task List Section */}
+            {/**********Task List Section *********************/}
             <div className="bg-white rounded-2xl shadow p-8">
 
                 {/* title */}
@@ -124,10 +128,9 @@ function SpaceDetail() {
                     <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
                         <ClipboardList className="text-[#004aad]" /> Tasks
                     </h2>
-                    {tasks.length < 0 ? (<button className="w-30 bg-[#004aad]  text-white py-2 rounded-lg font-semibold hover:bg-blue-800 transition">
+                    {tasks.length < 0 ? (<button  onClick={() => setShowPopup(true)} className="w-30 bg-[#004aad]  text-white py-2 rounded-lg font-semibold hover:bg-blue-800 transition">
                         Add Task +</button>): ('')}
-                    
-
+                     {showPopup && <NewTask onClose={() => setShowPopup(false)} projectId={project_id} />}
                 </div>
 
                 {tasks.length > 0 ? (
@@ -166,9 +169,10 @@ function SpaceDetail() {
                             <PartyPopper className="text-blue-500 h-5 w-5" />
                         </div>
                         
-                        <button type="submit"
+                        <button onClick={() => setShowPopup(true)}
                             className="w-50 mt-4 bg-[#004aad] text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-800 transition mx-auto block">
                             Add Task </button>
+                        {showPopup && <NewTask onClose={() => setShowPopup(false)} projectId={project_id}/>}
                     </div>
                 )}
             </div>
