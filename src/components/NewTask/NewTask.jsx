@@ -1,92 +1,115 @@
-import React, { useState } from 'react'
-import axios from 'axios'
+import { useState } from "react";
+import axios from "axios";
 import { getTokens } from '../../lib/auth'
+import { toast } from "sonner";
 
 
-function NewTask({ onClose, projectId }) {
 
+// from shadcn
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogDescription,
+} from "@/components/ui/dialog";
+{ open, onClose, projectId, onTaskCreated }
+function NewTask({ open, onClose, projectId, onTaskCreated}) {
     const [formData, setFormData] = useState({
         title: "",
         description: "",
         due_data: "",
+        state: "",
         priority: "",
-        created_at: "",
         assignee: "",
-        project_id: projectId
+        project_id: projectId,
     });
 
-    function handleChange(e) {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    }
+    const handleChange = (event) => {
+        setFormData({ ...formData, [event.target.name]: event.target.value });
+    };
 
+    const handleSubmit = async (event) => {
+        event.preventDefault();
 
-    async function handleSubmit(e) {
-        e.preventDefault();
         try {
             const { access } = getTokens();
-            const response = await axios.post(
-                "http://127.0.0.1:8000/api/tasks/",
-                formData,
-                { headers: { Authorization: `Bearer ${access}` } }
-            );
-            console.log("Task Created:", response.data);
-            onClose();
+
+            await axios.post("http://127.0.0.1:8000/api/tasks/", formData, {
+                headers: {
+                    Authorization: `Bearer ${access}`,
+                    "Content-Type": "application/json",
+                },
+            });
+            toast.success("🎉 Task added successfully!");
+            onClose()
+            onTaskCreated();
+
         } catch (error) {
-            console.error("Task creation failed:", error.response?.data);
+            console.error("Task creation error:", error.response?.data || error);
         }
-    }
+        if (error.response?.data?.assignee) {
+            alert("❌ Invalid Team Member ID — user does not exist.");
+        }
+    };
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <div className="bg-white p-6 rounded-lg shadow-md w-80 text-center">
-                <h2 className="text-xl font-semibold mb-3">Create Task</h2>
-                <p className="mb-4">This is a popup!</p>
-                <form onSubmit={handleSubmit}>
+        <Dialog open={open} onOpenChange={onClose}>
+            <DialogContent className="sm:max-w-md">
 
-                    <label className="block text-sm font-medium text-gray-700 mb-2 mt-4">🎯 Task Title</label>
-                    <input name='title' placeholder='ex:readme file' onChange={handleChange}
-                        className="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" />
+                {/* Headers  */}
+                <DialogHeader>
+                    <DialogTitle>Create New Task</DialogTitle>
+                    <DialogDescription>
+                        Fill out the fields to add a new task
+                    </DialogDescription>
+                </DialogHeader>
 
+                <form onSubmit={handleSubmit} className="space-y-3">
+                    <label>Task Title</label>
+                    <input name="title" placeholder="Task Title" required onChange={handleChange} className="w-full border px-3 py-2 rounded-lg" />
 
-                    <label className="block text-sm font-medium text-gray-700 mb-2 mt-4">📝 Give it a short description</label>
-                    <input name='description' placeholder='create readme file with plan and ERD ' onChange={handleChange}
-                        className="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" />
+                    <label>Description</label>
+                    <textarea name="description" placeholder="Task description" onChange={handleChange} className="w-full border px-3 py-2 rounded-lg" />
 
-                    <label className="block text-sm font-medium text-gray-700 mb-2 mt-4">⏳ Deadline</label>
-                    <input type="date" name='due_data' placeholder='' onChange={handleChange}
-                        className="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" />
-
-                    <label className="block text-sm font-medium text-gray-700 mb-2 mt-4">Priority</label>
-                    <input name='priority' placeholder='Low' onChange={handleChange}
-                        className="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" />
+                    <label>due_data</label>
+                    <input type="date" name="due_data" required onChange={handleChange} className="w-full border px-3 py-2 rounded-lg" />
 
 
-                    <label className="block text-sm font-medium text-gray-700 mb-2 mt-4">Created At </label>
-                    <input name='created_at' placeholder='11/11/2025' onChange={handleChange}
-                        className="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" />
+                    {/* State dropdown */}
+                    <label>State</label>
+                    <select name="state" required onChange={handleChange} className="w-full border px-3 py-2 rounded-lg">
+                        <option value="">Select Status</option>
+                        <option value="To Do">To Do</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Done">Done</option>
+                    </select>
 
-                    <label className="block text-sm font-medium text-gray-700 mb-2 mt-4">Team Member ID to Assignee To</label>
-                    <input name='assignee' placeholder='53134' onChange={handleChange}
-                        className="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" />
+                    {/* Priority dropdown */}
+                    <label>Task Priority</label>
+                    <select name="priority" required onChange={handleChange} className="w-full border px-3 py-2 rounded-lg">
+                        <option value="">Select Priority</option>
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                    </select>
 
-                    <button type='submit'
-                        className="w-full  bg-[#004aad] text-white font-medium py-2.5 rounded-lg hover:bg-[#1A4295] transition-colors mt-8" > Create Task 🌟 </button>
+                    <label>Assignee ID</label>
+                    <input type="number" name="assignee" placeholder="Team Member ID" onChange={handleChange}
+                        className="w-full border px-3 py-2 rounded-lg" />
 
-                    <button type="button" onClick={onClose}
-                        className="w-full  bg-[#004aad] text-white font-medium py-2.5 rounded-lg hover:bg-[#1A4295] transition-colors mt-8" >  Cancel </button>
-
+                    {/* buttons */}
+                    <div className="flex justify-end gap-3 pt-4">
+                        <button type="button" onClick={onClose} className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">
+                            Cancel</button>
+                        <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700" >
+                            Create Task</button>
+                    </div>
 
                 </form>
-
-                {/* <button
-                    onClick={onClose}
-                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-                >
-                    Close
-                </button> */}
-            </div>
-        </div>
+            </DialogContent>
+        </Dialog>
     );
 }
+export default NewTask
 
-export default NewTask;

@@ -15,7 +15,8 @@ function SpaceDetail() {
     const [tasks, setTasks] = useState([])
     const [project, setProject] = useState()
     const [loading, setLoading] = useState(true)
-    const [showPopUp , setShowPopUp] = useState(false)
+    // const [showPopup , setShowPopup] = useState(false)
+    const [openModal, setOpenModal] = useState(false);
 
 
     const handleReques = async () => {
@@ -128,9 +129,12 @@ function SpaceDetail() {
                     <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
                         <ClipboardList className="text-[#004aad]" /> Tasks
                     </h2>
-                    {tasks.length < 0 ? (<button  onClick={() => setShowPopup(true)} className="w-30 bg-[#004aad]  text-white py-2 rounded-lg font-semibold hover:bg-blue-800 transition">
-                        Add Task +</button>): ('')}
-                     {showPopup && <NewTask onClose={() => setShowPopup(false)} projectId={project_id} />}
+                    {tasks.length > 0 ? (<button onClick={() => setOpenModal(true)} className="w-30 bg-[#004aad]  text-white py-2 rounded-lg font-semibold hover:bg-blue-800 transition">
+                        Add Task +</button>) : ('')}
+                    <NewTask open={openModal} onClose={() => {
+                        setOpenModal(false)
+                        handleRequest()
+                    }} projectId={project_id} />
                 </div>
 
                 {tasks.length > 0 ? (
@@ -168,11 +172,13 @@ function SpaceDetail() {
                             <p className="text-gray-500">Let's Create Your First Task.</p>
                             <PartyPopper className="text-blue-500 h-5 w-5" />
                         </div>
-                        
-                        <button onClick={() => setShowPopup(true)}
+
+                        <button onClick={() => setOpenModal(true)}
                             className="w-50 mt-4 bg-[#004aad] text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-800 transition mx-auto block">
                             Add Task </button>
-                        {showPopup && <NewTask onClose={() => setShowPopup(false)} projectId={project_id}/>}
+                        <NewTask open={openModal} onClose={() => { setOpenModal(false); handleRequest() }} projectId={project_id} />
+                        <NewTask open={openModal} onClose={() => setOpenModal(false)} onTaskCreated={handleRequest} projectId={project_id}/>
+
                     </div>
                 )}
             </div>
