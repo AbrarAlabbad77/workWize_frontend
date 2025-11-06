@@ -13,7 +13,7 @@ import {
     DialogTitle,
     DialogDescription,
 } from "@/components/ui/dialog";
-{ open, onClose, projectId, onTaskCreated }
+
 function NewTask({ open, onClose, projectId, onTaskCreated}) {
     const [formData, setFormData] = useState({
         title: "",
@@ -35,7 +35,7 @@ function NewTask({ open, onClose, projectId, onTaskCreated}) {
         try {
             const { access } = getTokens();
 
-            await axios.post("http://127.0.0.1:8000/api/tasks/", formData, {
+            await axios.post(`http://127.0.0.1:8000/api/projects/${projectId}/add-task/`, formData, {
                 headers: {
                     Authorization: `Bearer ${access}`,
                     "Content-Type": "application/json",
@@ -47,10 +47,11 @@ function NewTask({ open, onClose, projectId, onTaskCreated}) {
 
         } catch (error) {
             console.error("Task creation error:", error.response?.data || error);
-        }
-        if (error.response?.data?.assignee) {
+             if (error.response?.data?.assignee) {
             alert("❌ Invalid Team Member ID — user does not exist.");
         }
+        }
+       
     };
 
     return (

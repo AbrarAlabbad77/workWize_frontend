@@ -36,11 +36,11 @@ export default function Login({ setUser }) {
     }
 
     return (
-        <div className="min-h-screen flex flex-row items-center justify-center bg-gray-100 px-4">
+        <div className="min-h-screen flex flex-row items-center justify-center bg-gray-100 px-4 gap-20">
 
             {/*  image  */}
             <div>
-                <img src="../../images/Login-bro.svg" className="h-130 w-auto mx-auto ml-20" />
+                <img src="../../images/Login-bro.svg" className="h-130 w-auto mx-auto " />
             </div>
 
             {/* form  */}

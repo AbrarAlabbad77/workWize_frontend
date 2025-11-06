@@ -49,12 +49,28 @@ source venv/bin/activate
 |---------------|--------------|
 | **Backend**   | Python, Django REST Framework (DRF), PostgreSQL |
 | **Frontend**  | React, Tailwind CSS |
-| **Dev Tools** | Git, GitHub |
+| **Dev Tools** | Git, GitHub, Postman |
+
+
+## 🔗 Front End Repository
+
+You can find the frontend source code here:  
+👉 [Frontend Repository](https://github.com/AbrarAlabbad77/workWize_frontend)
 
 ---
 
-## ✅ Planning
 
-### 📌 Entity Relationship Diagram (ERD)
-![ERD Diagram](images/ERD.png)
+## IceBox Features
+1. Add comments where model user can add comments to specific Task 
+2. Send notification reminder with task due soon
+3. Add graph in DasshBoard showing task that due soon 
+4. Add graph in DasshBoard showing task with high priority 
+6. Add Team model
+7. Add group of uers to one team
+8. Add Profile 
+9. Add about me page
+10. Add notification model
+11. Add calander
+
+
 

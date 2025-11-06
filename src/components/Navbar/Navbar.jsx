@@ -15,6 +15,10 @@ function Navbar({user , setUser}) {
       <nav className="flex gap-6 items-center text-gray-700"> 
         {user ? 
         <>
+        <Link to="home/" className="hover:text-[#004aad] px-4 py-1 border border-[#004aad] rounded-lg hover:bg-[#004aad] hover:text-white transition font-medium">
+        Home </Link>
+        <Link to="/aboutUs" className="hover:text-[#004aad] px-4 py-1 border border-[#004aad] rounded-lg hover:bg-[#004aad] hover:text-white transition font-medium">
+        Profile </Link>
         <LogOutButton setUser={setUser}/> 
         </>
         : 

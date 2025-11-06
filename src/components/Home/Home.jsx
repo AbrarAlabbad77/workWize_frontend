@@ -1,21 +1,29 @@
-import React, { useEffect, useState  } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { getTokens } from '../../lib/auth'
 import { useNavigate } from "react-router"
+import { useLocation } from 'react-router'
+
+
+// component 
+import NewProject from '../NewProject/NewProject'
 
 
 function Home() {
 
     // var
+    const location = useLocation();
     const [project, setProject] = useState([])
     const [loading, setLoading] = useState(true)
+    const [spaces, setSpaces] = useState([]);
+    const [showNewSpace, setShowNewSpace] = useState(false);
     const navigate = useNavigate()
 
 
     const handleRequest = async () => {
         try {
             const { access } = getTokens();
-            const response = await axios.get('http://127.0.0.1:8000/api/myspacese/', { headers: { Authorization: `Bearer ${access}` } })
+            const response = await axios.get('http://127.0.0.1:8000/api/projects/', { headers: { Authorization: `Bearer ${access}` } })
 
             setProject(response.data)
             console.log('spaces', response.data)
@@ -24,22 +32,31 @@ function Home() {
             console.error("Loading Spacese failed:", error.response?.data);
         }
         finally {
-      setLoading(false)}
+            setLoading(false)
+        }
     }
 
-    useEffect(() => {
-        handleRequest()
-    }, [])
+  useEffect(() => {
+    handleRequest();
+  }, []); 
+
+  // run when a new space is passed via navigation
+  useEffect(() => {
+    if (location.state?.newSpace) {
+      setSpaces(prev => [...prev, location.state.newSpace]);
+    }
+  }, [location.state]); 
+
 
 
     if (loading) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#f8faff]">
-        <img src="../../images/loading.svg" className="h-130 w-auto mx-auto ml-110" />
-        <p className="text-gray-500 text-lg ">Loading your workspaces...</p>
-      </div>
-    )
-  }
+        return (
+            <div className="min-h-screen flex flex-col items-center justify-center bg-[#f8faff]">
+                <img src="../../images/loading.svg" className="h-130 w-auto mx-auto ml-110" />
+                <p className="text-gray-500 text-lg ">Loading your workspaces...</p>
+            </div>
+        )
+    }
 
     return (
         <div className="min-h-screen bg-[#f8faff] px-10 py-10 pt-28 ">
@@ -47,9 +64,17 @@ function Home() {
             {/* title of page */}
             <div className='flex flex-row justify-between'>
                 <h1 className="text-2xl font-extrabold text-[#004aad] mb-10 tracking-tight pl-15 pt-10">Your Workspaces ✨</h1>
-                 <button className="text-[#004aad] font-semibold hover:text-blue-700 transition-colors pr-10">View All Spaces → </button>
+                {project.length > 0 ?
+                    <button  onClick={() => navigate('/newspace/')} className=" h-10 mt-5 bg-[#004aad] text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                        New Workspace +
+                    </button> : ('')}
+                {/* {showNewSpace && (
+                    <NewProject onClose={() => setShowNewSpace(false)} onSpaceCreated={(newSpace) => {
+                        setSpaces(prev => [...prev, newSpace]); setShowNewSpace(false)
+                    }} />
+                )} */}
             </div>
-            
+
 
             {/* Spaces Container */}
             {project.length > 0 ? (
@@ -73,24 +98,26 @@ function Home() {
                                 <p className="flex items-center gap-2">
                                     🗓 <span>{pro.deadline || "No deadline"}</span>
                                 </p>
-                                <button  onClick={() => navigate(`/spaces/${pro.id}`)} className="text-[#004aad] font-semibold hover:text-blue-700 transition-colors">
+                                <button onClick={() => navigate(`/spaces/${pro.id}`)} className="text-[#004aad] font-semibold hover:text-blue-700 transition-colors">
                                     View Details →
                                 </button>
                             </div>
                         </div>
                     ))}
-                </div>) 
+                </div>)
                 :// if there is no space yet 
-                ( 
+                (
                     <div className="bg-white rounded-xl p-8 text-center shadow-sm border border-gray-100 mt-10">
                         <p className="text-gray-500 text-lg">
                             😅 No workspaces yet — why not create your first one?
                         </p>
-                        <button newspace onClick={() => navigate(`/newspace/`)} className="mt-5 bg-[#004aad] text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                        <button  onClick={() => navigate('/newspace/')} className="mt-5 bg-[#004aad] text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
                             + New Workspace
                         </button>
+
                     </div>
                 )}
+                
         </div>
 
     )

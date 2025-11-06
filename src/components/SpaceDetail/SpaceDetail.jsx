@@ -19,7 +19,7 @@ function SpaceDetail() {
     const [openModal, setOpenModal] = useState(false);
 
 
-    const handleReques = async () => {
+    const handleRequest = async () => {
         try {
             const { access } = getTokens()
             const response = await axios.get(`http://127.0.0.1:8000/api/projects/${project_id}/tasks/`, { headers: { Authorization: `Bearer ${access}` } })
@@ -29,6 +29,23 @@ function SpaceDetail() {
             console.error("Loading Task failed:", error.response?.data);
         }
     }
+
+    const handleDelete = async (taskId) => {
+    try {
+        const { access } = getTokens();
+        await axios.delete(
+            `http://127.0.0.1:8000/api/tasks/${taskId}/`, 
+            { headers: { Authorization: `Bearer ${access}` } }
+        );
+
+        // to UI immediately without refreshing page
+        setTasks(prev => prev.filter(task => task.id !== taskId));
+
+    } catch (error) {
+        console.error("Delete failed:", error.response?.data);
+    }
+};
+
 
 
     const fetchProject = async () => {
@@ -47,7 +64,7 @@ function SpaceDetail() {
 
 
     useEffect(() => {
-        handleReques()
+        handleRequest()
         fetchProject()
     }, [project_id])
 
@@ -98,15 +115,6 @@ function SpaceDetail() {
                     </p>
                 </div>
 
-                {/* 
-                <div className="bg-white p-5 rounded-xl shadow hover:shadow-md transition-all text-center">
-                    <ClipboardList className="text-yellow-500 mx-auto mb-2" />
-                    <h2 className="font-semibold text-gray-700">To Do</h2>
-                    <p className="text-2xl font-bold text-gray-900">
-                        {tasks.filter((t) => t.state === "To Do").length}
-                    </p>
-                </div> */}
-
                 <div className="bg-white p-5 rounded-xl shadow hover:shadow-md transition-all text-center">
                     <PieChart className="text-purple-500 mx-auto mb-2" />
                     <h2 className="font-semibold text-gray-700">Total Task</h2>
@@ -142,26 +150,51 @@ function SpaceDetail() {
                         {tasks.map((task) => (
                             <li
                                 key={task.id}
-                                className="flex justify-between items-center p-4 border rounded-lg hover:shadow-sm transition"
+                                className="flex justify-between items-center p-4 border rounded-xl hover:shadow-md transition bg-white"
                             >
-                                <div>
-                                    <h3 className="font-semibold text-gray-800">{task.title}</h3>
+
+                                {/* Left section: title and due date */}
+                                <div className="flex flex-col">
+                                    <h3 className="font-semibold text-gray-800 text-base">{task.title}</h3>
                                     <p className="text-sm text-gray-500">
-                                        Due: {new Date(task.due_data).toLocaleDateString()} •{" "}
-                                        {/* <span className="font-medium text-gray-700">{task.state}</span> */}
+                                        Due: {new Date(task.due_data).toLocaleDateString()}
                                     </p>
                                 </div>
-                                <span
-                                    className={`px-3 py-1 rounded-full text-sm font-semibold ${task.priority === "High"
-                                        ? "bg-red-100 text-red-600"
-                                        : task.priority === "Medium"
-                                            ? "bg-yellow-100 text-yellow-600"
-                                            : "bg-green-100 text-green-600"
-                                        }`}
-                                >
-                                    {task.priority}
-                                </span>
+
+
+                                {/* Right section: buttons and priority */}
+                                <div className="flex items-center gap-3">
+                                    {/* Priority badge */}
+                                    <span
+                                        className={`px-3 py-1 rounded-full text-xs font-semibold ${task.priority === "High"
+                                                ? "bg-red-50 text-red-600 border border-red-200"
+                                                : task.priority === "Medium"
+                                                    ? "bg-yellow-50 text-yellow-600 border border-yellow-200"
+                                                    : "bg-green-50 text-green-600 border border-green-200"
+                                            }`}
+                                    >
+                                        {task.priority}
+                                    </span>
+
+                                    {/* Edit button */}
+                                    <button
+                                       
+                                        className="flex items-center gap-1 bg-[#004aad] hover:bg-blue-600 text-white text-xs font-medium px-4 py-1.5 rounded-full shadow-sm transition"
+                                    >
+                                        ✏️ Edit
+                                    </button>
+
+                                    {/* Delete button */}
+                                    <button
+                                        onClick={() => handleDelete(task.id)}
+                                        className="flex items-center gap-1 hover:bg-red-600 text-xs font-medium px-4 py-1.5 rounded-full shadow-sm transition 
+                                        bg-red-50 text-red-600 border border-red-200 hover:text-white"
+                                    >
+                                        🗑 Delete
+                                    </button>
+                                </div>
                             </li>
+
                         ))}
                     </ul>
                 ) : (
@@ -176,8 +209,7 @@ function SpaceDetail() {
                         <button onClick={() => setOpenModal(true)}
                             className="w-50 mt-4 bg-[#004aad] text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-800 transition mx-auto block">
                             Add Task </button>
-                        <NewTask open={openModal} onClose={() => { setOpenModal(false); handleRequest() }} projectId={project_id} />
-                        <NewTask open={openModal} onClose={() => setOpenModal(false)} onTaskCreated={handleRequest} projectId={project_id}/>
+                        <NewTask open={openModal} onClose={() => setOpenModal(false)} onTaskCreated={handleRequest} projectId={project_id} />
 
                     </div>
                 )}

@@ -13,7 +13,7 @@ function LogOutButton({setUser}) {
 
   return (
     <div>
-      <button className="w-full  bg-[#004aad] text-white font-medium py-2.5 rounded-lg hover:bg-[#1A4295] transition-colors mt-8" onClick={handleLogOut}>Log out</button>
+      <button className="hover:text-[#004aad] px-4 py-1 border border-[#004aad] rounded-lg hover:bg-[#004aad] hover:text-white transition font-medium" onClick={handleLogOut}>Log out</button>
     </div>
   )
 }

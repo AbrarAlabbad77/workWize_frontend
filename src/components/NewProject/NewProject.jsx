@@ -1,13 +1,19 @@
 import React from 'react'
+import axios from 'axios';
 import { useState } from 'react';
+import { useNavigate } from "react-router"
+import { getTokens } from '../../lib/auth';
+import { toast } from "sonner";
 
-function NewProject() {
 
+function NewProject({onSpaceCreated}) {
+
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({
         title: "",
         description: "",
         deadline: "",
-        manager_id: "",
+        manager: "",
     });
 
     const handleChange = (event) => {
@@ -20,9 +26,19 @@ function NewProject() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/projects/', formData)
-            console.log('Space Created Sucessfuly', response.data)
-            // navigate('/login')
+            const { access } = getTokens()
+            const response = await axios.post('http://127.0.0.1:8000/api/projects/', formData, {
+                headers: {
+                    Authorization: `Bearer ${access}`,
+                    "Content-Type": "application/json"
+                }
+            })
+            toast.success("🎉 Space Added Successfully!");
+            if (onSpaceCreated) {
+                onSpaceCreated(response.data); // send new space to parent(home)
+            }
+            // navigate('/home')
+            navigate('/home', { state: { newSpace: response.data } });
         }
         catch (error) {
             console.error("creating new spcae filled:", error.response?.data);
@@ -43,7 +59,7 @@ function NewProject() {
                     <form onSubmit={handleSubmit}>
 
                         <label className="block text-sm font-medium text-gray-700 mb-2 mt-4">🎯 What’s would you like to calle the space</label>
-                        <input name='Title' placeholder='ex:markting ads' onChange={handleChange}
+                        <input name='title' placeholder='ex:markting ads' onChange={handleChange}
                             className="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" />
 
 
@@ -55,8 +71,8 @@ function NewProject() {
                         <input type="date" name='deadline' placeholder='' onChange={handleChange}
                             className="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" />
 
-                        <label className="block text-sm font-medium text-gray-700 mb-2 mt-4">👔 Supervisor ID</label>
-                        <input name='manager_id' placeholder='ex:19882' onChange={handleChange}
+                        <label className="block text-sm font-medium text-gray-700 mb-2 mt-4"> ID</label>
+                        <input name='manager' placeholder='ex:19882' onChange={handleChange}
                             className="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" />
 
 

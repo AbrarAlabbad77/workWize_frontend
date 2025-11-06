@@ -2,6 +2,8 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router'
 import { getUserFromToken } from './lib/auth'
+import { Toaster } from "sonner";
+
 
 // component 
 import Signup1 from './components/Auth/Signup1'
@@ -50,6 +52,20 @@ function App() {
 
   return (
     <div>
+      <Toaster richColors position="top-right"  toastOptions={{
+          style: {
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            fontSize: "22px",
+            padding: "24px 32px",
+            borderRadius: "14px",
+            textAlign: "center",
+          },
+        }} />
+
+        
       <BrowserRouter>
         <Navbar user={user} setUser={setUser}/>
 
@@ -61,8 +77,8 @@ function App() {
           <Route path='newspace/' element={< NewProject />} />
           <Route path='landhome/' element={< LandPage />} />
           <Route path='home/' element={< Home />} />
-          <Route path='spaces/:project_id' element={< SpaceDetail />} />
-          <Route path='spaces/:project_id' element={< NewTask />} />
+          <Route path='spaces/:project_id/' element={< SpaceDetail />} />
+          <Route path='addtask/' element={< NewTask />} />
         </Routes>
 
       </BrowserRouter>
