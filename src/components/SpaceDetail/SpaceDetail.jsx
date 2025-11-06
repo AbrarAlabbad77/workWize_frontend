@@ -141,7 +141,7 @@ function SpaceDetail() {
                         Add Task +</button>) : ('')}
                     <NewTask open={openModal} onClose={() => {
                         setOpenModal(false)
-                        handleRequest()
+                        onTaskCreated={handleRequest}
                     }} projectId={project_id} />
                 </div>
 
